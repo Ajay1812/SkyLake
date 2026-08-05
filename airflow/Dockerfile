@@ -10,4 +10,5 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 USER airflow
 RUN pip install --no-cache-dir \
     pyspark~=4.0.4 \
-    python-dotenv>=1.2.2
+    python-dotenv>=1.2.2 \
+    boto3>=1.43.0

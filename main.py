@@ -1,18 +1,28 @@
+from airflow.exceptions import AirflowSkipException
+
 from spark import config, reader, cleaner, writer, iceberg_writer
+from spark.manifest import ManifestManager
 
 def extract_clean_and_write_parquet():
     session = config.Session()
+    manifest = ManifestManager(session.BUCKET, session.REGION)
+    new_files = manifest.get_new_files()
+    if not new_files:
+        raise AirflowSkipException("No new raw files to process")
+
     spark = session.get_spark_session()
     print('Spark Session Created')
     try:
-        flight_df = reader.DataReader(spark, session.RAW_PATH).read_flights()
-        # flight_df.show(5)
+        paths = [f"s3a://{session.BUCKET}/raw/{f}" for f in new_files]
+        flight_df = reader.DataReader(spark, paths).read_flights()
 
         data_cleaner = cleaner.DataCleaner(flight_df)
         cleaned_data = data_cleaner.clean()
 
         data = writer.DataWriter(cleaned_data)
         data.write_parquet(session.PROCESSED_PATH)
+
+        manifest.mark_processed(new_files)
     finally:
         session.stop()
         print('Session Stopped')

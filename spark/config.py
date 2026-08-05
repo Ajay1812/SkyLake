@@ -7,7 +7,6 @@ class Session:
         load_dotenv()
         self.REGION = os.environ['AWS_REGION']
         self.BUCKET = os.environ['S3_BUCKET']
-        self.RAW_PATH = f"s3a://{self.BUCKET}/raw/*.csv"
         self.PROCESSED_PATH = f"s3a://{self.BUCKET}/processed/flights_cleaned"
         self.ICEBERG_WAREHOUSE = f"s3a://{self.BUCKET}/iceberg"
         self.CATALOG = "local"
