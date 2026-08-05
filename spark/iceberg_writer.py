@@ -8,4 +8,4 @@ class IcebergWriter:
     def write_iceberg(self):
         self.df.writeTo(f'{self.catalog}.{self.db}.flight_events')\
                 .using('iceberg')\
-                .createOrReplace()
+                .append()
