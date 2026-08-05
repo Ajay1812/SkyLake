@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: airline_delays
+    description: Average arrival delay and flight volume per carrier, for delayed flights only.
+    columns:
+      - name: OP_CARRIER
+        tests:
+          - not_null
+          - unique
+      - name: avg_delay
+        tests:
+          - not_null
+      - name: total_flights
+        tests:
+          - not_null

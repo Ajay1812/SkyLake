@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+docker/minio-data/
+
+# Test/tooling caches
+.pytest_cache/
+
+# Local Claude Code config
+.claude/
+
+# Learning roadmap (personal notes, not project docs)
+ROADMAP.md
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
