@@ -4,8 +4,10 @@ class IcebergWriter:
         self.df = df
         self.catalog = catalog
         self.db = db
-        
+
     def write_iceberg(self):
-        self.df.writeTo(f'{self.catalog}.{self.db}.flight_events')\
-                .using('iceberg')\
-                .append()
+        table = f'{self.catalog}.{self.db}.flight_events'
+        if self.spark.catalog.tableExists(table):
+            self.df.writeTo(table).using('iceberg').append()
+        else:
+            self.df.writeTo(table).using('iceberg').create()
