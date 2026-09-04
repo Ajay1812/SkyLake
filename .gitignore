@@ -16,6 +16,10 @@ docker/minio-data/
 
 # Local Claude Code config
 .claude/
+.mcp.json
+
+# JetBrains IDE config
+.idea/
 
 # Learning roadmap (personal notes, not project docs)
 ROADMAP.md
