@@ -1,6 +1,8 @@
-from pyspark.sql import SparkSession
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from pyspark.sql import SparkSession
+
 
 class Session:
     def __init__(self) -> None:

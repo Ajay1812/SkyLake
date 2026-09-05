@@ -92,7 +92,9 @@ uv run pytest
 
 ## Status / known gaps
 
-- Iceberg writes use `createOrReplace()`, so the table is fully rebuilt every
-  run rather than appended to — true incremental ingestion is a planned next
-  step.
+- Ingestion is incremental: a manifest tracked in S3 (`raw/_manifest.json`)
+  records which raw files have already been processed, so each run only picks
+  up new files. Iceberg writes are self-healing — the writer checks whether
+  `flight_events` exists and creates it on first run, then `append()`s on
+  every run after that, rather than rebuilding the table each time.
 - No CI, no BI layer yet.

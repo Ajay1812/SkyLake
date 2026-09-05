@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
-from airflow import DAG
+
 from airflow.operators.python import PythonOperator
-from spark.task_failure import task_failure_alert
+
+from airflow import DAG
 from main import extract_clean_and_write_parquet, write_iceberg_table
+from spark.task_failure import task_failure_alert
 
 default_args = {
     'owner' : 'nf_01',
