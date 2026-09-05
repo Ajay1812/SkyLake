@@ -1,5 +1,7 @@
 import json
+
 import boto3
+
 
 class ManifestManager:
     def __init__(self, bucket, region, raw_prefix="raw/", manifest_key="raw/_manifest.json"):

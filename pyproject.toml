@@ -7,7 +7,6 @@ requires-python = ">=3.14"
 dependencies = [
     "boto3>=1.43.64",
     "boto3-stubs~=1.43.64",
-    "dbt-spark[pyhive]>=1.11.0",
     "jupyter>=1.1.1",
     "pyspark~=4.0.4",
     "python-dotenv>=1.2.2",
@@ -17,8 +16,18 @@ dependencies = [
 dev = [
     "apache-airflow==2.10.5",
     "pytest>=9.1.1",
+    "ruff>=0.16.6",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff]
+line-length = 110
+target-version = "py314"
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]

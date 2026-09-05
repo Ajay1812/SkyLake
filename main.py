@@ -1,7 +1,8 @@
 from airflow.exceptions import AirflowSkipException
 
-from spark import config, reader, cleaner, writer, iceberg_writer
+from spark import cleaner, config, iceberg_writer, reader, writer
 from spark.manifest import ManifestManager
+
 
 def extract_clean_and_write_parquet():
     session = config.Session()
