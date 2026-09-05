@@ -8,10 +8,10 @@ class Session:
         load_dotenv()
         self.REGION = os.environ['AWS_REGION']
         self.BUCKET = os.environ['S3_BUCKET']
+        self.CATALOG = os.environ['CATALOG']
+        self.DATABASE = os.environ['DATABASE']
         self.PROCESSED_PATH = f"s3a://{self.BUCKET}/processed/flights_cleaned"
         self.ICEBERG_WAREHOUSE = f"s3a://{self.BUCKET}/iceberg"
-        self.CATALOG = "glue"
-        self.DATABASE = "flights"
 
     def get_spark_session(self):
         self.spark = (
@@ -23,10 +23,10 @@ class Session:
                         "org.apache.iceberg:iceberg-spark-runtime-4.0_2.13:1.10.2,"
                         "org.apache.iceberg:iceberg-aws-bundle:1.10.2"
                     )
-                    .config("spark.sql.catalog.glue", "org.apache.iceberg.spark.SparkCatalog")
-                    .config("spark.sql.catalog.glue.catalog-impl", "org.apache.iceberg.aws.glue.GlueCatalog")
-                    .config("spark.sql.catalog.glue.warehouse",self.ICEBERG_WAREHOUSE)
-                    .config("spark.sql.catalog.glue.io-impl","org.apache.iceberg.aws.s3.S3FileIO")
+                    .config(f"spark.sql.catalog.{self.CATALOG}", "org.apache.iceberg.spark.SparkCatalog")
+                    .config(f"spark.sql.catalog.{self.CATALOG}.catalog-impl", "org.apache.iceberg.aws.glue.GlueCatalog")
+                    .config(f"spark.sql.catalog.{self.CATALOG}.warehouse",self.ICEBERG_WAREHOUSE)
+                    .config(f"spark.sql.catalog.{self.CATALOG}.io-impl","org.apache.iceberg.aws.s3.S3FileIO")
                     .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
                     .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
                     .config("spark.hadoop.fs.s3a.aws.credentials.provider", "com.amazonaws.auth.DefaultAWSCredentialsProviderChain")

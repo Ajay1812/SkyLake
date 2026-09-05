@@ -23,6 +23,7 @@ docker/minio-data/
 
 # Learning roadmap (personal notes, not project docs)
 ROADMAP.md
+improvement.md
 
 # Notebook checkpoints
 .ipynb_checkpoints/
